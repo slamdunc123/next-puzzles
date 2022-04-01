@@ -1,0 +1,28 @@
+.buttonsContatiner {
+	display: flex;
+}
+
+.button {
+	background-color: blue;
+	width: 25px;
+	height: 25px;
+	margin: 2px;
+	cursor: pointer;
+	border: none;
+	color: white;
+	&:hover {
+		transform: scale(1.1);
+	}
+
+	
+}
+
+.buttonDisabled {
+		background-color: grey;
+        width: 25px;
+	height: 25px;
+	margin: 2px;
+	border: none;
+	color: white;
+		
+	}

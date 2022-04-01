@@ -1,0 +1,19 @@
+.boxContainer {
+    display: flex;
+}
+
+.box {
+    width: 100px;
+    height: 100px;
+    background-color: lightblue;
+    margin: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    
+    &:hover {
+        background-color: lightgrey;
+        color: white
+    }
+}

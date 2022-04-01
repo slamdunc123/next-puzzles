@@ -1,0 +1,32 @@
+.blockContainer {
+	display: flex;
+}
+
+.block {
+	width: 100px;
+	height: 100px;
+	background-color: lightblue;
+	margin: 2px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	cursor: pointer;
+
+	&:hover {
+		background-color: lightgrey;
+		color: white;
+	}
+
+
+}
+
+.activeBlock {
+    background-color: lightgreen;
+    width: 100px;
+    height: 100px;
+    margin: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
