@@ -4,11 +4,10 @@ import AnagramBlocks from './AnagramBlocks';
 import AnswerBlocks from './AnswerBlocks';
 import LetterBlocks from './LetterBlocks';
 import { shuffleArray } from '../../utils';
+import { wordsArr } from './words';
 
 const AnagramGame = () => {
-	const answer = 'BREAD';
-	const ansArr = Array.from(answer);
-	const ansArrToShuffle = Array.from(answer);
+	// const answer = 'BREAD';
 
 	const [selectedLetter, setSelectedLetter] = useState('');
 	const [activeBlock, setActiveBlock] = useState(0);
@@ -16,6 +15,10 @@ const AnagramGame = () => {
 	const [anagramArr, setAnagramArr] = useState([]);
 	const [isBlockArrFull, setIsBlockArrFull] = useState(false);
 	const [message, setMessage] = useState('');
+	const [word, setWord] = useState('');
+	const [score, setScore] = useState(0);
+	const [ansArr, setAnsArr] = useState([]);
+	const [ansArrToShuffle, setAnsArrToShuffle] = useState([]);
 
 	const handleLetterOnClick = (e) => {
 		setSelectedLetter(e.target.value);
@@ -28,39 +31,44 @@ const AnagramGame = () => {
 		setActiveBlock(e.target.id);
 	};
 
-	const newGame = () => {
+	const nextGo = () => {
 		setBlockArr(['', '', '', '', '']);
 		setActiveBlock(0);
-        const shuffledArr = shuffleArray(ansArrToShuffle);
-		setAnagramArr(shuffledArr);
+		setScore((prevScore) => prevScore + 1);
 	};
-	console.log('answer', answer);
 	console.log('ansArr', ansArr);
 
-	useEffect(() => {
-		console.log('answer', answer);
-		console.log('ansArr', ansArr);
-		const shuffledArr = shuffleArray(ansArrToShuffle);
-		setAnagramArr(shuffledArr);
-	}, []);
-
-	useEffect(() => {
-		if (!blockArr.includes('')) setIsBlockArrFull(true);
-	}, [blockArr]);
-
+	// checks for correct answer to match the word
 	useEffect(() => {
 		const tempArr: boolean[] = blockArr.map((item, index) =>
 			ansArr[index] !== item ? false : true
 		);
 		const findFalse = tempArr.find((item) => item === false);
 
-		if (findFalse === undefined) newGame();
+		if (findFalse === undefined) nextGo();
 	}, [blockArr]);
+
+	// get a random word from array and make uppercase
+	// create an array from random word and store in 2 variables
+	// shuffle 1 variable to create anagram
+
+	useEffect(() => {
+		const randomWord =
+			wordsArr[Math.floor(Math.random() * wordsArr.length)].toUpperCase();
+		setWord(randomWord);
+
+		const ansArr = Array.from(randomWord);
+		setAnsArr(ansArr);
+
+		const ansArrToShuffle = Array.from(randomWord);
+		setAnsArrToShuffle(ansArrToShuffle);
+
+		const shuffledArr = shuffleArray(ansArrToShuffle);
+		setAnagramArr(shuffledArr);
+	}, [score]);
 
 	return (
 		<>
-			{console.log('ansArr', ansArr)};
-			{console.log('anagramArr', anagramArr)}
 			<h3>Anagram Game</h3>
 			<AnagramBlocks
 				anagramArr={anagramArr}
@@ -75,7 +83,8 @@ const AnagramGame = () => {
 				ansArr={ansArr}
 				handleLetterOnClick={handleLetterOnClick}
 			/>
-			{message}
+			{/* {message} */}
+			{`Score = ${score}`}
 		</>
 	);
 };
