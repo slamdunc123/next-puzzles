@@ -4,13 +4,11 @@ import styles from './AnswerBlocks.module.scss';
 interface AnswerBlocksProps {
 	activeBlock: number;
 	blockArr: string[];
-	handleBlockOnClick: (e: MouseEvent<HTMLDivElement>) => void;
 }
 
 const AnswerBlocks = ({
 	activeBlock,
 	blockArr,
-	handleBlockOnClick,
 }: AnswerBlocksProps) => {
 	return (
 		<>
@@ -20,7 +18,6 @@ const AnswerBlocks = ({
 					return (
 						<div
 							id={index}
-							onClick={handleBlockOnClick}
 							key={index}
 							className={
 								activeBlock == index

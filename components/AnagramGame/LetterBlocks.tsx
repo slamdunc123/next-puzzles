@@ -7,9 +7,10 @@ const lettersArr = Array.from(alphabet);
 interface LetterBlocksProps {
 	ansArr: string[];
 	handleLetterOnClick: (e: MouseEvent<HTMLButtonElement>) => void;
+	handleDeleteOnClick: (e: MouseEvent<HTMLButtonElement>) => void;
 }
 
-const LetterBlocks = ({ ansArr, handleLetterOnClick }: LetterBlocksProps) => {
+const LetterBlocks = ({ ansArr, handleLetterOnClick, handleDeleteOnClick }: LetterBlocksProps) => {
 	return (
 		<>
 			<h5>Letter Blocks</h5>
@@ -31,6 +32,7 @@ const LetterBlocks = ({ ansArr, handleLetterOnClick }: LetterBlocksProps) => {
 						</button>
 					);
 				})}
+                <button onClick={handleDeleteOnClick}>del</button>
 			</div>
 		</>
 	);

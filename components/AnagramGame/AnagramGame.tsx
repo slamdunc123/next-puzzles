@@ -6,9 +6,9 @@ import LetterBlocks from './LetterBlocks';
 import { shuffleArray } from '../../utils';
 import { wordsArr } from './words';
 
+const clearedArr = ['', '', '', '', ''];
+const secsVal = 10;
 const AnagramGame = () => {
-	const clearedArr = ['', '', '', '', ''];
-	const secsVal = 10;
 
 	const [selectedLetter, setSelectedLetter] = useState('');
 	const [activeBlock, setActiveBlock] = useState<number>(0);
@@ -27,16 +27,31 @@ const AnagramGame = () => {
 	const handleLetterOnClick = (e: MouseEvent<HTMLButtonElement>) => {
 		setSelectedLetter((e.target as HTMLButtonElement).value);
 		const updatedBlockArr = [...blockArr];
-		updatedBlockArr[activeBlock] = (e.target as HTMLButtonElement).value;
-		setBlockArr(updatedBlockArr);
+		if (activeBlock !== blockArr.length) {
+			updatedBlockArr[activeBlock] = (
+				e.target as HTMLButtonElement
+			).value;
+			setBlockArr(updatedBlockArr);
+			setActiveBlock((prevActiveBlock) => prevActiveBlock + 1);
+		}
+		console.log('activeBlock', activeBlock);
+	};
+	const handleDeleteOnClick = () => {
+		const updatedBlockArr = [...blockArr];
+		if (activeBlock !== 0) {
+			updatedBlockArr[activeBlock - 1] = '';
+			setBlockArr(updatedBlockArr);
+			setActiveBlock((prevActiveBlock) => prevActiveBlock - 1);
+		}
+		console.log('activeBlock', activeBlock);
 	};
 
-	const handleBlockOnClick = (e: MouseEvent<HTMLDivElement>) => {
-		setActiveBlock(parseInt((e.target as HTMLDivElement).id));
-	};
+	console.log(blockArr);
 
 	const handlePlayOnClick = () => {
 		getFirstWord();
+		setBlockArr(clearedArr);
+		setActiveBlock(0);
 		setIsGameInPlay(true);
 		setIsTimerOn(true);
 		setSecs(secsVal);
@@ -85,6 +100,8 @@ const AnagramGame = () => {
 		if (secs === 0) {
 			setIsGameInPlay(false);
 			setIsTimerOn(false);
+            setBlockArr(clearedArr)
+            setActiveBlock(0)
 		}
 	}, [secs]);
 
@@ -104,21 +121,18 @@ const AnagramGame = () => {
 
 	return (
 		<>
-			{console.log('ansArr', ansArr)}
+			{/* {console.log('ansArr', ansArr)} */}
 			<h3>Anagram Game</h3>
 			{!isTimerOn && <button onClick={handlePlayOnClick}>Play</button>}
 			<AnagramBlocks
 				anagramArr={isGameInPlay ? anagramArr : clearedArr}
 				selectedLetter={selectedLetter}
 			/>
-			<AnswerBlocks
-				activeBlock={activeBlock}
-				blockArr={blockArr}
-				handleBlockOnClick={handleBlockOnClick}
-			/>
+			<AnswerBlocks activeBlock={activeBlock} blockArr={blockArr} />
 			<LetterBlocks
 				ansArr={isTimerOn ? ansArr : clearedArr}
 				handleLetterOnClick={handleLetterOnClick}
+				handleDeleteOnClick={handleDeleteOnClick}
 			/>
 			{`Score = ${score}`}
 			<div>{secs}</div>
