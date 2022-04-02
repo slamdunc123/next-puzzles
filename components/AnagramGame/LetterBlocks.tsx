@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { MouseEvent } from 'react';
 import styles from './LetterBlocks.module.scss';
 
 const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
 const lettersArr = Array.from(alphabet);
 
-const LetterBlocks = ({ ansArr, handleLetterOnClick }) => {
+interface LetterBlocksProps {
+	ansArr: string[];
+	handleLetterOnClick: (e: MouseEvent<HTMLButtonElement>) => void;
+}
+
+const LetterBlocks = ({ ansArr, handleLetterOnClick }: LetterBlocksProps) => {
 	return (
 		<>
 			<h5>Letter Blocks</h5>
