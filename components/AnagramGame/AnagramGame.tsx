@@ -1,15 +1,21 @@
 import React, { useState, useEffect, MouseEvent } from 'react';
-import styles from './AnagramGame.module.scss';
 import AnagramBlocks from './AnagramBlocks';
 import AnswerBlocks from './AnswerBlocks';
 import LetterBlocks from './LetterBlocks';
 import { shuffleArray } from '../../utils';
 import { wordsArr } from './words';
+import styles from './AnagramGame.module.scss';
 
 const clearedArr = ['', '', '', '', ''];
-const secsVal = 10;
-const AnagramGame = () => {
+const secsVal = 60;
 
+const newArr = wordsArr.map((item) => {
+	return item.word;
+});
+
+console.log(newArr);
+
+const AnagramGame = () => {
 	const [selectedLetter, setSelectedLetter] = useState('');
 	const [activeBlock, setActiveBlock] = useState<number>(0);
 	const [blockArr, setBlockArr] = useState(clearedArr);
@@ -34,7 +40,6 @@ const AnagramGame = () => {
 			setBlockArr(updatedBlockArr);
 			setActiveBlock((prevActiveBlock) => prevActiveBlock + 1);
 		}
-		console.log('activeBlock', activeBlock);
 	};
 	const handleDeleteOnClick = () => {
 		const updatedBlockArr = [...blockArr];
@@ -43,10 +48,7 @@ const AnagramGame = () => {
 			setBlockArr(updatedBlockArr);
 			setActiveBlock((prevActiveBlock) => prevActiveBlock - 1);
 		}
-		console.log('activeBlock', activeBlock);
 	};
-
-	console.log(blockArr);
 
 	const handlePlayOnClick = () => {
 		getFirstWord();
@@ -82,6 +84,17 @@ const AnagramGame = () => {
 		setAnagramArr(shuffledArr);
 	};
 
+	const handleNextOnClick = () => {
+		getFirstWord();
+		setBlockArr(clearedArr);
+		setActiveBlock(0);
+	};
+
+	const handleClear = () => {
+		setBlockArr(clearedArr);
+		setActiveBlock(0);
+	};
+
 	useEffect(() => {
 		let interval;
 		if (isTimerOn) {
@@ -100,8 +113,8 @@ const AnagramGame = () => {
 		if (secs === 0) {
 			setIsGameInPlay(false);
 			setIsTimerOn(false);
-            setBlockArr(clearedArr)
-            setActiveBlock(0)
+			setBlockArr(clearedArr);
+			setActiveBlock(0);
 		}
 	}, [secs]);
 
@@ -121,9 +134,31 @@ const AnagramGame = () => {
 
 	return (
 		<>
-			{/* {console.log('ansArr', ansArr)} */}
 			<h3>Anagram Game</h3>
-			{!isTimerOn && <button onClick={handlePlayOnClick}>Play</button>}
+            <div className={styles.buttonContainer}>
+
+			{!isTimerOn ? (
+                <button
+                className={styles.buttonPlay}
+                onClick={handlePlayOnClick}
+				>
+					Play
+				</button>
+			) : (
+				<>
+					<button
+						className={styles.buttonPlay}
+						onClick={handleNextOnClick}
+                        >
+						Skip
+					</button>
+					<button className={styles.buttonPlay} onClick={handleClear}>
+						Clear
+					</button>
+				</>
+			)}
+            </div>
+
 			<AnagramBlocks
 				anagramArr={isGameInPlay ? anagramArr : clearedArr}
 				selectedLetter={selectedLetter}
@@ -137,6 +172,7 @@ const AnagramGame = () => {
 			{`Score = ${score}`}
 			<div>{secs}</div>
 			{secs === 0 && <div>{`You scored ${score}`}</div>}
+			{secs === 0 && <div>{ansArr}</div>}
 		</>
 	);
 };

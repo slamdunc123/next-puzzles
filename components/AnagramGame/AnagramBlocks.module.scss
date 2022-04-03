@@ -4,10 +4,13 @@
 
 .answerLetter {
 	background-color: yellow;
+    color: grey;
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	width: 100px;
 	height: 100px;
 	margin: 2px;
+    font-size:xx-large;
+    font-weight: bold;
 }

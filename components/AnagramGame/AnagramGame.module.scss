@@ -1,19 +1,19 @@
-.boxContainer {
+.buttonContainer {
     display: flex;
 }
 
-.box {
+.buttonPlay {
+    background-color: green;
+    color: white;
+    border: none;
     width: 100px;
-    height: 100px;
-    background-color: lightblue;
+    height: 50px;
+    border-radius: 5%;
     margin: 2px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     cursor: pointer;
-    
     &:hover {
-        background-color: lightgrey;
-        color: white
+        background-color: white;
+        border: 1px solid green;
+        color: green;
     }
 }

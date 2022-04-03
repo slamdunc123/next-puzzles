@@ -7,7 +7,6 @@ interface AnagramBlocksProps {
 }
 
 const AnagramBlocks = ({ anagramArr, selectedLetter }: AnagramBlocksProps) => {
-	const correctLetter = anagramArr.includes(selectedLetter);
 	return (
 		<>
 			<h5>Anagram Blocks</h5>

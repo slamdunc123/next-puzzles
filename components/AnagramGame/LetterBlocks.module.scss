@@ -2,10 +2,15 @@
 	display: flex;
 }
 
+.buttonsRow {
+	display: flex;
+	justify-content: center;
+}
+
 .button {
 	background-color: blue;
-	width: 25px;
-	height: 25px;
+	width: 50px;
+	height: 50px;
 	margin: 2px;
 	cursor: pointer;
 	border: none;
@@ -13,16 +18,24 @@
 	&:hover {
 		transform: scale(1.1);
 	}
-
-	
 }
 
 .buttonDisabled {
-		background-color: grey;
-        width: 25px;
-	height: 25px;
+	background-color: grey;
+	width: 50px;
+	height: 50px;
 	margin: 2px;
 	border: none;
 	color: white;
-		
-	}
+}
+
+.buttonDelete {
+    background-color: white;
+	width: 50px;
+	height: 50px;
+	margin: 2px;
+	border: 1px solid grey;
+	color: grey;
+	cursor: pointer;
+
+}
