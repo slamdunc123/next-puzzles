@@ -7,7 +7,6 @@ import { wordsArr } from '../../constants/words';
 import styles from './AnagramGame.module.scss';
 import Timer from '../Timer/Timer';
 import Controls from '../Controls/Controls';
-import GameMessage from '../GameMessage/GameMessage';
 import Overlay from '../Overlay/Overlay';
 
 const clearedArr = ['', '', '', '', ''];
@@ -137,10 +136,9 @@ const AnagramGame = () => {
 
 	return (
 		<>
-			{secs === 0 && <Overlay />}
+			{secs === 0 && <Overlay message={message} />}
 			<h3>Anagram Game</h3>
 
-			<GameMessage message={message} />
 			<Controls
 				isTimerOn={isTimerOn}
 				handlePlayOnClick={handlePlayOnClick}

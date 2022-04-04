@@ -1,7 +1,32 @@
 .overlay {
-	height: 100vh;
-	width: 100vw;
+	height: 100%;
+	width: 100%;
 	background-color: rgba(0, 0, 0, 0.5);
     position: fixed;
     pointer-events: none; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.message {
+    z-index: 100;
+    font-size: 5rem;
+    font-weight: 700;
+    animation: grow 1.5s;
+    color: white;
+}
+
+@keyframes grow {
+    0% {
+		transform: scale(0);
+	}
+
+	50% {
+		transform: scale(2);
+	}
+
+	100% {
+		transform: scale(1);
+	}
 }
