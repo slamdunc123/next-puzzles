@@ -16,7 +16,7 @@ const Timer = ({ secs }: Secs) => {
 		};
 	}, [secs]);
 
-	return <div className={styles[`seconds${secsColor}`]}>{secs}</div>;
+	return <div className={styles[`seconds${secsColor}`]}>{secs !== 0 && secs}</div>;
 };
 
 export default Timer;
