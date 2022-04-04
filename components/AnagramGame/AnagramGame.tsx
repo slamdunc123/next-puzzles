@@ -1,34 +1,34 @@
 import React, { useState, useEffect, MouseEvent } from 'react';
-import AnagramBlocks from './AnagramBlocks';
-import AnswerBlocks from './AnswerBlocks';
-import LetterBlocks from './LetterBlocks';
+import AnagramBlocks from '../AnagramBlocks/AnagramBlocks';
+import AnswerBlocks from '../AnswerBlocks/AnswerBlocks';
+import LetterBlocks from '../LetterBlocks/LetterBlocks';
 import { shuffleArray } from '../../utils';
-import { wordsArr } from './words';
+import { wordsArr } from '../../constants/words';
 import styles from './AnagramGame.module.scss';
+import Timer from '../Timer/Timer';
+import Controls from '../Controls/Controls';
+import GameMessage from '../GameMessage/GameMessage';
+import Overlay from '../Overlay/Overlay';
 
 const clearedArr = ['', '', '', '', ''];
-const secsVal = 60;
+const secsVal = 5;
 
 const newArr = wordsArr.map((item) => {
 	return item.word;
 });
-
-console.log(newArr);
 
 const AnagramGame = () => {
 	const [selectedLetter, setSelectedLetter] = useState('');
 	const [activeBlock, setActiveBlock] = useState<number>(0);
 	const [blockArr, setBlockArr] = useState(clearedArr);
 	const [anagramArr, setAnagramArr] = useState([]);
-	const [isBlockArrFull, setIsBlockArrFull] = useState(false);
 	const [message, setMessage] = useState('');
-	const [result, setResult] = useState('');
-	const [word, setWord] = useState('');
 	const [score, setScore] = useState(0);
 	const [ansArr, setAnsArr] = useState<string[]>([]);
 	const [isGameInPlay, setIsGameInPlay] = useState(false);
 	const [isTimerOn, setIsTimerOn] = useState(false);
 	const [secs, setSecs] = useState(secsVal);
+	const [skip, setSkip] = useState(0);
 
 	const handleLetterOnClick = (e: MouseEvent<HTMLButtonElement>) => {
 		setSelectedLetter((e.target as HTMLButtonElement).value);
@@ -58,6 +58,7 @@ const AnagramGame = () => {
 		setIsTimerOn(true);
 		setSecs(secsVal);
 		setScore(0);
+		setSkip(0);
 	};
 
 	const nextGo = () => {
@@ -72,7 +73,6 @@ const AnagramGame = () => {
 		// shuffle 1 variable to create anagram
 		const randomWord =
 			wordsArr[Math.floor(Math.random() * wordsArr.length)].toUpperCase();
-		setWord(randomWord);
 
 		const wordArr = Array.from(randomWord);
 		setAnsArr(wordArr);
@@ -84,13 +84,14 @@ const AnagramGame = () => {
 		setAnagramArr(shuffledArr);
 	};
 
-	const handleNextOnClick = () => {
+	const handleSkipOnClick = () => {
 		getFirstWord();
 		setBlockArr(clearedArr);
 		setActiveBlock(0);
+		setSkip((prevSkip) => prevSkip + 1);
 	};
 
-	const handleClear = () => {
+	const handleClearOnClick = () => {
 		setBlockArr(clearedArr);
 		setActiveBlock(0);
 	};
@@ -110,11 +111,13 @@ const AnagramGame = () => {
 	}, [isTimerOn]);
 
 	useEffect(() => {
+		setMessage('');
 		if (secs === 0) {
 			setIsGameInPlay(false);
 			setIsTimerOn(false);
 			setBlockArr(clearedArr);
 			setActiveBlock(0);
+			setMessage('Game Over');
 		}
 	}, [secs]);
 
@@ -134,30 +137,16 @@ const AnagramGame = () => {
 
 	return (
 		<>
+			{secs === 0 && <Overlay />}
 			<h3>Anagram Game</h3>
-            <div className={styles.buttonContainer}>
 
-			{!isTimerOn ? (
-                <button
-                className={styles.buttonPlay}
-                onClick={handlePlayOnClick}
-				>
-					Play
-				</button>
-			) : (
-				<>
-					<button
-						className={styles.buttonPlay}
-						onClick={handleNextOnClick}
-                        >
-						Skip
-					</button>
-					<button className={styles.buttonPlay} onClick={handleClear}>
-						Clear
-					</button>
-				</>
-			)}
-            </div>
+			<GameMessage message={message} />
+			<Controls
+				isTimerOn={isTimerOn}
+				handlePlayOnClick={handlePlayOnClick}
+				handleClearOnClick={handleClearOnClick}
+				handleSkipOnClick={handleSkipOnClick}
+			/>
 
 			<AnagramBlocks
 				anagramArr={isGameInPlay ? anagramArr : clearedArr}
@@ -170,7 +159,8 @@ const AnagramGame = () => {
 				handleDeleteOnClick={handleDeleteOnClick}
 			/>
 			{`Score = ${score}`}
-			<div>{secs}</div>
+			{`Skipped = ${skip}`}
+			<Timer secs={secs} />
 			{secs === 0 && <div>{`You scored ${score}`}</div>}
 			{secs === 0 && <div>{ansArr}</div>}
 		</>

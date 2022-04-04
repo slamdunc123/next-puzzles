@@ -1,0 +1,19 @@
+.buttonContainer {
+    display: flex;
+}
+
+.button {
+    background-color: green;
+    color: white;
+    border: none;
+    width: 100px;
+    height: 50px;
+    border-radius: 5%;
+    margin: 2px;
+    cursor: pointer;
+    &:hover {
+        background-color: white;
+        border: 1px solid green;
+        color: green;
+    }
+}
