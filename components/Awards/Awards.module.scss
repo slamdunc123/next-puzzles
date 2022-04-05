@@ -1,0 +1,80 @@
+.award {
+    width: 20px;
+	height: 20px;
+	opacity: 0;
+}
+
+.awardGold {
+	composes: award;
+	color: gold;
+   
+}
+.awardSilver {
+	composes: award;
+	color: silver;
+   
+}
+.awardBronze {
+	composes: award;
+	color: orangered;
+   
+}
+
+.awardAnimationOne {
+    animation: animateAward1 2s infinite;
+}
+.awardAnimationTwo {
+	animation: animateAward2 1.5s infinite;
+}
+.awardAnimationThree {
+	animation: animateAward3 1s infinite;
+}
+.awardAnimationFour {
+	animation: animateAward4 2.5s infinite;
+}
+
+@keyframes animateAward1 {
+	0% {
+		opacity: 1;
+		transform: scale(0.1) translate(0px, 0px) rotate(0deg);
+	}
+
+	100% {
+		opacity: 0;
+		transform: scale(20) translate(-15px, -15px) rotate(90deg);
+	}
+}
+
+@keyframes animateAward2 {
+	0% {
+		opacity: 1;
+		transform: scale(0.1) translate(0px, 0px) rotate(0deg);
+	}
+
+	100% {
+		opacity: 0;
+		transform: scale(20) translate(25px, -25px) rotate(90deg);
+	}
+}
+@keyframes animateAward3 {
+	0% {
+		opacity: 1;
+		transform: scale(0.1) translate(0px, 0px) rotate(0deg);
+	}
+
+	100% {
+		opacity: 0;
+		transform: scale(20) translate(35px, 35px) rotate(90deg);
+	}
+}
+@keyframes animateAward4 {
+	0% {
+		opacity: 1;
+		transform: scale(0.1) translate(0px, 0px) rotate(0deg);
+	}
+
+	100% {
+		opacity: 0;
+		transform: scale(20) translate(-45px, 45px) rotate(90deg);
+	}
+}

@@ -27,7 +27,8 @@ const AnagramGame = () => {
 	const [isGameInPlay, setIsGameInPlay] = useState(false);
 	const [isTimerOn, setIsTimerOn] = useState(false);
 	const [secs, setSecs] = useState(secsVal);
-	const [skip, setSkip] = useState(0);
+	const [skips, setSkips] = useState(0);
+	const [showOverlay, setShowOverlay] = useState(false);
 
 	const handleLetterOnClick = (e: MouseEvent<HTMLButtonElement>) => {
 		setSelectedLetter((e.target as HTMLButtonElement).value);
@@ -57,7 +58,7 @@ const AnagramGame = () => {
 		setIsTimerOn(true);
 		setSecs(secsVal);
 		setScore(0);
-		setSkip(0);
+		setSkips(0);
 	};
 
 	const nextGo = () => {
@@ -87,12 +88,16 @@ const AnagramGame = () => {
 		getFirstWord();
 		setBlockArr(clearedArr);
 		setActiveBlock(0);
-		setSkip((prevSkip) => prevSkip + 1);
+		setSkips((prevSkip) => prevSkip + 1);
 	};
 
 	const handleClearOnClick = () => {
 		setBlockArr(clearedArr);
 		setActiveBlock(0);
+	};
+
+	const handleShowOverlayOnClick = () => {
+		setShowOverlay(false);
 	};
 
 	useEffect(() => {
@@ -112,11 +117,13 @@ const AnagramGame = () => {
 	useEffect(() => {
 		setMessage('');
 		if (secs === 0) {
+			setShowOverlay(true);
 			setIsGameInPlay(false);
 			setIsTimerOn(false);
 			setBlockArr(clearedArr);
 			setActiveBlock(0);
 			setMessage('Game Over');
+			
 		}
 	}, [secs]);
 
@@ -136,7 +143,15 @@ const AnagramGame = () => {
 
 	return (
 		<>
-			{secs === 0 && <Overlay message={message} />}
+			{console.log('render')}
+			{showOverlay && (
+				<Overlay
+					message={message}
+					score={score}
+					skips={skips}
+					handleShowOverlayOnClick={handleShowOverlayOnClick}
+				/>
+			)}
 			<h3>Anagram Game</h3>
 
 			<Controls
@@ -157,7 +172,7 @@ const AnagramGame = () => {
 				handleDeleteOnClick={handleDeleteOnClick}
 			/>
 			{`Score = ${score}`}
-			{`Skipped = ${skip}`}
+			{`Skipped = ${skips}`}
 			<Timer secs={secs} />
 			{secs === 0 && <div>{`You scored ${score}`}</div>}
 			{secs === 0 && <div>{ansArr}</div>}

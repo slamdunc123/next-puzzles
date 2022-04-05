@@ -1,24 +1,41 @@
 .overlay {
 	height: 100%;
 	width: 100%;
-	background-color: rgba(0, 0, 0, 0.5);
-    position: fixed;
-    pointer-events: none; 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+	background-color: rgba(0, 0, 0, 0.75);
+	position: fixed;
+	// pointer-events: none;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	flex-direction: column;
 }
 
-.message {
-    z-index: 100;
-    font-size: 5rem;
-    font-weight: 700;
-    animation: grow 1.5s;
-    color: white;
+.messageGameOver {
+	z-index: 100;
+	font-size: 5rem;
+	font-weight: 700;
+	animation: grow 1.5s;
+	color: white;
 }
+.messageScore {
+	z-index: 100;
+	font-size: 3rem;
+	font-weight: 700;
+	animation: grow 2s;
+	color: white;
+}
+.messageSkips {
+	z-index: 100;
+	font-size: 3rem;
+	font-weight: 700;
+	animation: grow 2s;
+	color: white;
+}
+
+
 
 @keyframes grow {
-    0% {
+	0% {
 		transform: scale(0);
 	}
 
@@ -30,3 +47,5 @@
 		transform: scale(1);
 	}
 }
+
+
